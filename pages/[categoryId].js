@@ -1,26 +1,27 @@
-// pages/categories/[categoryId]/[subcategoryId].js
+// pages/[categoryId].js
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import categories from '../data';
 
-export default function SubcategoryPage({ subcategory }) {
+export default function CategoryPage({ category }) {
   return (
-    <div className="container">
+    <div className="  ">
       <Head>
-        <title>{subcategory.name} - Clapier pour Lapin</title>
+        <title>Meilleurs {category.name}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <Header title={`Produits dans ${subcategory.name}`} />
+        <Header title={`Meilleurs ${category.name}`}/>
         <hr />
-        <h1>{subcategory.name}</h1>
         <ul>
-          {subcategory.products.map(product => (
+          {category.products.map(product => (
             <li key={product.id}>
-              <h2>{product.name}</h2>
+              <a href={product.url} target="_blank" rel="noopener noreferrer" title={`Voir plus de détails sur ${product.name}`}>
+                <h2>{product.name}</h2>
+              </a>
               <p>Note: {product.rating}</p>
               <p>Commentaire: {product.comment}</p>
             </li>
@@ -34,17 +35,14 @@ export default function SubcategoryPage({ subcategory }) {
 }
 
 export async function getStaticPaths() {
-  const paths = categories.flatMap(category =>
-    category.subcategories.map(subcategory => ({
-      params: { categoryId: category.id, subcategoryId: subcategory.id },
-    }))
-  );
+  const paths = categories.map(category => ({
+    params: { categoryId: category.id },
+  }));
 
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
   const category = categories.find(category => category.id === params.categoryId);
-  const subcategory = category.subcategories.find(subcategory => subcategory.id === params.subcategoryId);
-  return { props: { subcategory } };
+  return { props: { category } };
 }
