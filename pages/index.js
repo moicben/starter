@@ -9,13 +9,13 @@ export default function Home() {
   return (
     <div className="">
       <Head>
-        <title>Clapier pour Lapin</title>
+        <title>Avis sur la boutique Clapier</title>
         <meta name="description" content="Découvrez les meilleurs produits pour clapiers et cages pour lapins. Avis, conseils et recommandations pour choisir le meilleur clapier pour votre lapin." />
         <link rel="icon" href="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=48,h=48,fit=crop,f=png/mxBZnNwoZgIBrBrX/lapin-favicon-x32-Ylevxa62xrhWJvxb.png" />
         <link rel="apple-touch-icon" href="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=48,h=48,fit=crop,f=png/mxBZnNwoZgIBrBrX/lapin-favicon-x32-Ylevxa62xrhWJvxb.png"></link>
       </Head>
       <main>
-        <Header title="Bienvenue sur Clapier pour Lapin!" />
+        <Header title="Notre avis sur la boutique Clapier Lapin!" />
         <hr />
         <section>
           <h2>Nos avis sur les produits Clapier Lapin</h2>

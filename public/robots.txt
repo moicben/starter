@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+
+# Allow crawling of all other pages
+Allow: /
+
+# Sitemap location
+Sitemap: https://univers-lapin.shop/sitemap.xml
