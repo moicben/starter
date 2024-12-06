@@ -1,31 +1,42 @@
-import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+// pages/index.js
+import Head from 'next/head';
+import Header from '@components/Header';
+import Footer from '@components/Footer';
+import Link from 'next/link';
+import categories from '../data';
 
 export default function Home() {
   return (
     <div className="container">
       <Head>
         <title>Clapier pour Lapin</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=48,h=48,fit=crop,f=png/mxBZnNwoZgIBrBrX/lapin-favicon-x32-Ylevxa62xrhWJvxb.png" />
+        <link rel="apple-touch-icon" href="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=48,h=48,fit=crop,f=png/mxBZnNwoZgIBrBrX/lapin-favicon-x32-Ylevxa62xrhWJvxb.png"></link>
       </Head>
-
+      produits z
       <main>
         <Header title="Bienvenue sur Clapier pour Lapin!" />
-        <img src="/path/to/logo.png" alt="Logo Clapier pour Lapin" style={{ width: '150px', height: 'auto' }} />
         <hr />
-        <h1>Clapier pour Lapin</h1>
-        <p className="description">
-          Bienvenue sur notre site dédié aux clapiers pour lapins. Nous vous proposons les meilleurs conseils et produits pour vos lapins.
-        </p>
-        <a href="https://clapier-lapin.pro" target="_blank" rel="noopener noreferrer">
-          <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=861,h=642,fit=crop/mxBZnNwoZgIBrBrX/boy-grass-playing-with-rabbits-chicken-1-mP4nk82PlvSw3ayQ.jpg" alt="Clapier pour Lapin" />
-        </a>
-        <h2>Nos Produits</h2>
-        <button onClick={() => window.location.href='https://clapier-lapin.pro'}>Visitez notre site</button>
+        <h1>Nos Catégories</h1>
+        <ul>
+          {categories.map(category => (
+            <li key={category.id}>
+              <h2>{category.name}</h2>
+              <ul>
+                {category.subcategories.map(subcategory => (
+                  <li key={subcategory.id}>
+                    <Link href={`/categories/${category.id}/${subcategory.id}`}>
+                      <a>{subcategory.name}</a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
       </main>
 
       <Footer />
     </div>
-  )
+  );
 }
