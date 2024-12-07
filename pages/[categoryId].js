@@ -20,7 +20,7 @@ export default function CategoryPage({ category }) {
           {category.products.map(product => (
             <li key={product.id}>
               <a href={product.url} target="_blank" rel="noopener noreferrer" title={`Voir plus de détails sur ${product.name}`}>
-                <h2>{product.name}</h2>
+                <h3>{product.name}</h3>
               </a>
               <p>Note: {product.rating}</p>
               <p>Commentaire: {product.comment}</p>

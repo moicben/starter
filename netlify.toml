@@ -1,3 +1,7 @@
 [build]
-  command = "npm run build"
-  publish = ".next"
+  publish = "out"
+  command = "npm run build && npm run export"
+
+[context.production.environment]
+  NEXT_PUBLIC_SITE_TITLE = "Avis sur la boutique Clapier"
+  NEXT_PUBLIC_SITE_DESCRIPTION = "Découvrez les meilleurs produits pour clapiers et cages pour lapins. Avis, conseils et recommandations pour choisir le meilleur clapier pour votre lapin."
