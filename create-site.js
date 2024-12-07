@@ -1,46 +1,52 @@
-const axios = require('axios');
+import { NetlifyAPI } from 'netlify';
 
 const NETLIFY_API_TOKEN = 'nfp_a5XErPtzsBUdRcZ1BFSiqPkxPk4h6L18babb';
 const NETLIFY_TEAM_ID = 'YOUR_NETLIFY_TEAM_ID';
 const DOMAIN = 'clapier-lapin.pro';
 
+// Lire la clé SSH privée
+const SSH_PRIVATE_KEY = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDnu3Fpvd24YjFG2EiUjbQ4bHFVf3MCuiNj+0ovwXp2gq1AtKY6uk+tz+0vEphfJOqF58sYco0/nDxjsXcnNNkZqLpXoipGs23WYFn1tXf8u2GbRlguz0xC2jDVnolBxwrh7I0yF9Avn21wGBHGc8R4N3NFr1Z4PBCuk3SsTLXG4DF2FED/FpbJa+TkFZ8ZDVClbw4ZDdXgrZD2mfpMTla+COhNh0DmtHRpRfRue8ABNRbm8kPNt6fdI9Utll7ee9qPWNE76KYGULL4fj+e9BrqnLAHkjtcT8jcmBCeHWrHVMjrnNX4Pw3n8GAbFoIfMgzyUAsizgV6xlqslQ6R+VORghjJWcKJ/TbY+nlXDPvz7byH8rfB18FHMcELb+QpelGjVCOnQgIqoTnA5nNBzRshTZXUmMPgQ9JlySRNgMN5YhX6W2Rh673gitSxizw2AQKsgCmeaHPuQbS9sM9yLMolyhUsmifoOhwhIOykj1fvq5LbHaRmQu5tvFjOesu38ORBnr4zbTCeymkzGN6q9azAsoNHp+wh1lCoBMjXP0PdhPj5kiYU5QjOSc+YJKINwYrRaQrK/tDcJAsoZDggqfn3VuuO4Kbz7jgghdBDhAv+tb9Kvm6r+PQjYivlLeZJgbyuf0u67ufh0mkncANqsFZGJWAmR+fO5O11O30kGbP7mQ== benjamain.georges@gmail.com"
+
 const subdomains = [
-  'sub1',
-  'sub2',
-  'sub3',
+  '10'
   // Ajoutez autant de sous-domaines que nécessaire
 ];
 
+const api = new NetlifyAPI(NETLIFY_API_TOKEN);
+
 async function createSite(subdomain) {
   try {
-    const response = await axios.post(
-      'https://api.netlify.com/api/v1/sites',
-      {
+    const site = await api.createSite({
+      body: {
         name: `${subdomain}.${DOMAIN}`,
         custom_domain: `${subdomain}.${DOMAIN}`,
-        build_settings: {
-          repo_url: 'https://github.com/moicben/starter',
-          repo_branch: 'main',
-          dir: 'out',
-          cmd: 'npm run build && npm run export',
+        repo: {
+          provider: 'github',
+          repo: 'moicben/starter',
+          private: false,
+          branch: 'main',
+          auth: {
+            type: 'ssh',
+            ssh_key: SSH_PRIVATE_KEY
+          },
         },
       },
-      {
-        headers: {
-          Authorization: `Bearer ${NETLIFY_API_TOKEN}`,
-        },
-      }
-    );
+    });
 
-    console.log(`Site created: ${response.data.url}`);
+    console.log(`Site created: ${site.url}`);
   } catch (error) {
-    console.error(`Error creating site for ${subdomain}:`, error.response.data);
+    console.error(`Error creating site for ${subdomain}:`, error.message);
   }
+}
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function createSites() {
   for (const subdomain of subdomains) {
     await createSite(subdomain);
+    await delay(1000); // Ajoute un délai de 10 secondes entre les requêtes
   }
 }
 
