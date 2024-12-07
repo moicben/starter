@@ -1,20 +1,3 @@
 [build]
   publish = "out"
-  command = "npm run build && npm run export"
-
-[context.production.environment]
-  NODE_ENV = "production"
-  NEXT_PUBLIC_SITE_TITLE = "Avis sur la boutique Clapier"
-  NEXT_PUBLIC_SITE_DESCRIPTION = "Découvrez les meilleurs produits pour clapiers et cages pour lapins. Avis, conseils et recommandations pour choisir le meilleur clapier pour votre lapin."
-
-[context.production]
-  environment = { NODE_VERSION = "16.13.0" }
-
-[build.environment]
-  NETLIFY_USE_YARN = "true"
-
-[build.processing]
-  skip_processing = true
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+  command = "npm run dev"
