@@ -1,6 +1,6 @@
-const { SitemapStream } = require('sitemap');
-const { createWriteStream } = require('fs');
-const { resolve } = require('path');
+import { SitemapStream } from 'sitemap'
+import { createWriteStream } from 'fs'
+import { resolve } from 'path'
 const categories = require('./data');
 
 async function generateSitemap() {
